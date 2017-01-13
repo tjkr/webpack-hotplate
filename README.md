@@ -5,6 +5,7 @@ A flexible webpack configuration for personal projects.
 ## Plugins
 
 [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+[webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
 ## Getting Started
 
