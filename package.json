@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --display-error-details"
+    "build": "webpack-dev-server --open"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "html-webpack-plugin": "^2.26.0",
-    "webpack": "^2.2.0-rc.4"
+    "webpack": "^2.2.0-rc.4",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
     "path": "^0.12.7"

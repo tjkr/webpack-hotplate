@@ -20,7 +20,7 @@ const PATHS = {
 module.exports = {
 
   context: PATHS.src,
-  
+
   entry: {
     // The context property references the source directory and tells
     // webpack to begin there. `main` is just the key that references
@@ -55,6 +55,13 @@ module.exports = {
     //   minChunks: 2
     // })
 
-  ]
+  ],
+
+  // configuation for the webpack-dev-server plugin
+  devServer: {
+    compress: true,
+    port: 9000,
+    inline: true
+  }
 
 }
