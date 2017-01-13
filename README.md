@@ -11,7 +11,7 @@ A flexible webpack configuration for personal projects.
 #### Clone repo
 
 ```
-git@github.com:jake-wies/webpack-hotplate.git
+git clone git@github.com:jake-wies/webpack-hotplate.git
 
 cd webpack-hotplate
 ```
