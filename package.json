@@ -1,0 +1,19 @@
+{
+  "name": "webpack-hotplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --display-error-details"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.26.0",
+    "webpack": "^2.2.0-rc.4"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}
