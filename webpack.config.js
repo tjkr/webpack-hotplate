@@ -19,6 +19,7 @@ const PATHS = {
  */
 module.exports = {
 
+  // The base directory where webpack begins
   context: PATHS.src,
 
   entry: {
@@ -34,6 +35,35 @@ module.exports = {
     // be `main`
     filename: '[name].bundle.js',
     path: PATHS.dist
+  },
+
+  module: {
+
+    rules: [
+      // ES6
+      {
+        // this regex pattern matches any files with a .js or .jsx
+        // file extension
+        test: /\.jsx?$/,
+
+        include: [
+          path.join(__dirname, 'src')
+        ],
+
+        // exclude the node_modules folder from being transpiled
+        exclude: [
+          path.join(__dirname, 'node_modules')
+        ],
+
+        // transform all .js and .jsx files to standard ES5 syntax
+        // using the Babel loader
+        loader: 'babel-loader',
+
+        options: {
+          presets: ['es2015']
+        }
+      }
+    ]
   },
 
   plugins: [
@@ -60,7 +90,7 @@ module.exports = {
   // configuation for the webpack-dev-server plugin
   devServer: {
     compress: true,
-    port: 9000,
+    port: 3000,
     inline: true
   }
 
