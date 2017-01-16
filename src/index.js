@@ -1,7 +1,9 @@
-import { sayFoo } from './modules/module1';
+import { sayHello } from './modules/module';
+
+const name = 'World';
 
 let element = document.createElement('h1');
 
-element.innerHTML = sayFoo();
+element.innerHTML = sayHello(name);
 
 document.body.appendChild(element);

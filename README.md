@@ -5,7 +5,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 ## Features
 
 * ES6 support via [Babel](https://github.com/babel/babel-loader)
-* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html) (See [below](#tree-shaking) for how this works)
+* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
 See the [in-depth](#features-in-depth) section at the end of the `README` for more details.
