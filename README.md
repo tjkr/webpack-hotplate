@@ -50,25 +50,27 @@ This webpack configuration uses `babel-preset-es2015`. This preset bundles [many
 module.exports = {
   ...
   module: {
-    {
-      test: /\.jsx?$/,
+    rules: [
+      {
+        test: /\.jsx?$/,
 
-      include: [
-        path.join(__dirname, 'src')
-      ],
+        include: [
+          path.join(__dirname, 'src')
+        ],
 
-      exclude: [
-        path.join(__dirname, 'node_modules')
-      ],
+        exclude: [
+          path.join(__dirname, 'node_modules')
+        ],
 
-      loader: 'babel-loader',
+        loader: 'babel-loader',
 
-      options: {
-        presets: [
-          [ 'es2015', {"modules": false} ] // the secret sauce!
-        ]
-      }
-    }
+        options: {
+          presets: [
+            [ 'es2015', {"modules": false} ] // the secret sauce!
+          ]
+        }
+      }  
+    ]
   }
 }
 ```
@@ -81,3 +83,19 @@ According to the `babel-preset-es2015` documentation:
 Adding `{"modules": false}` should prevent ES6 modules from being transformed to `commonJS` modules, giving webpack its coveted tree-shaking ability!
 
 **Note:** If you test this functionality, you may find that unused exports are still finding their way in to your bundle. This is true only in development mode. In production mode, files are minified and dead code is eliminated. Unused exports will be washed away!. Run `webpack -p` in your terminal to test.
+
+#### Extracting Babel presets out to `.babelrc`
+
+We can take this a step further by removing the `presets` array from `webpack.config.js` and adding it to a seperate file in our project root named `.babelrc`. This is just an approach that practices *seperation of concerns*.
+
+```javascript
+// .babelrc
+{
+  "presets": [
+    [ "es2015", { "modules": false } ]
+  ]
+}
+
+After doing this, we can delete the `options` property from `module.rules` in `webpack.config.js`.
+
+```

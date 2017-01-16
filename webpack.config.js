@@ -33,7 +33,6 @@ module.exports = {
   },
   module: {
     rules: [
-      // ES6
       {
         // this regex pattern matches any files with a .js or .jsx
         // file extension
