@@ -95,7 +95,6 @@ We can take this a step further by removing the `presets` array from `webpack.co
     [ "es2015", { "modules": false } ]
   ]
 }
+```
 
 After doing this, we can delete the `options` property from `module.rules` in `webpack.config.js`.
-
-```
