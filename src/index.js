@@ -1,7 +1,7 @@
-import sayHey from './modules/module1';
+import { sayFoo } from './modules/module1';
 
 let element = document.createElement('h1');
 
-element.innerHTML = sayHey();
+element.innerHTML = sayFoo();
 
 document.body.appendChild(element);

@@ -1,5 +1,3 @@
-const name = 'Jake Wiesler';
+export const sayFoo = () => 'Foo!';
 
-const sayHey = () => `Hi, I'm ${name}!`;
-
-export default sayHey;
+export const sayBar = () => 'Bar!';
