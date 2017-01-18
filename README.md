@@ -1,6 +1,6 @@
 # Webpack Hotplate
 
-A lightweight, flexible [webpack](https://github.com/webpack/webpack) configuration. :stew:
+A lightweight, flexible [webpack](https://github.com/webpack/webpack) configuration :stew:
 
 ## Features
 
@@ -135,7 +135,7 @@ module.exports = {
 
 An Express server used **only** in development mode and provides live reloading.
 
-#### configuration
+#### Configuration
 
 You can run `webpack-dev-server` through the command line, but this boilerplate opts for configuration via the `devServer` property in `webpack.config.js`. The options passed to the `devServer` property will be picked up by `webpack-dev-server`:
 
@@ -153,8 +153,11 @@ module.exports = {
 ```
 
 More info in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
+
 [Link to GitHub Repo](https://github.com/webpack/webpack-dev-server)
 
 ## Contributing
 
-This boilerplate is a work in progress. It's initial purpose was purely educational, but as I've begun to grasp webpack more I feel it is necessary to give back what I've learned through this repository. Feel free to create issues/ pull requests. If I feel that the contribution is in-line with the goal of this "boilerplate", I will gladly add it in. :ok_hand:
+This project is a work in progress. It's initial purpose was purely educational, but as I've begun to grasp webpack more I feel it is necessary to give back what I've learned through this repository. That is why I have prioritized documentation for certain features and plugins that have been added.
+
+Feel free to create issues/ pull requests. If I feel that the contribution is in-line with the goal of this "boilerplate", I will gladly add it in. :ok_hand:
