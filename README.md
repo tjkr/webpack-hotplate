@@ -1,19 +1,21 @@
 # Webpack Hotplate
 
-A lightweight, flexible [webpack](https://github.com/webpack/webpack) configuration.
+A lightweight, flexible [webpack](https://github.com/webpack/webpack) configuration. :stew:
 
 ## Features
 
 * ES6 support via [Babel](https://github.com/babel/babel-loader)
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 * React
+
+*[Features In-Depth](#features-in-depth)*
 
 ## Plugins
 
-[html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+* [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
-See the [in-depth](#features-in-depth) sections at the end of the `README` for more details on features on plugins.
+*[Plugins In-Depth](#plugins-in-depth)*
 
 ## Getting Started
 
@@ -50,6 +52,8 @@ One of the advantages that webpack 2 brings to the table is **tree-shaking**. We
 This webpack configuration uses `babel-preset-es2015`. This preset bundles [many transforms](https://github.com/babel/babel/blob/master/packages/babel-preset-es2015/src/index.js) together. One of those transforms, `babel-plugin-transform-es2015-modules-commonjs`, converts ES6 code into CommonJS modules. This is not ideal, as tree-shaking is not possible with CommonJS modules. We need a way to use `babel-preset-es2015` without the `commonjs` transform. Luckily, this problem can be solved by [adding another option](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015#options) to `babel-loader` in `webpack.config.js`:
 
 ```javascript
+//webpack.config.js
+
 module.exports = {
   ...
   module: {
@@ -89,7 +93,7 @@ Adding `{"modules": false}` should prevent ES6 modules from being transformed to
 
 #### Extracting Babel presets out to `.babelrc`
 
-We can take this a step further by removing the `presets` array from `webpack.config.js` and adding it to a seperate file in our project root named `.babelrc`. This is just an approach that practices *seperation of concerns*.
+We can take this a step further by removing the `presets` array from `webpack.config.js` and adding it to a seperate file in our project root named `.babelrc`. This is approach gives us a better *seperation of concerns*.
 
 ```javascript
 // .babelrc
@@ -100,7 +104,7 @@ We can take this a step further by removing the `presets` array from `webpack.co
 }
 ```
 
-After doing this, we can delete the `options` property from `module.rules` in `webpack.config.js`.
+We can then delete the `options` property from `module.rules` in `webpack.config.js`.
 
 ---
 
@@ -126,3 +130,31 @@ module.exports = {
 ```
 
 [Link to GitHub Repo](https://github.com/ampedandwired/html-webpack-plugin)
+
+### webpack-dev-server
+
+An Express server used **only** in development mode and provides live reloading.
+
+#### configuration
+
+You can run `webpack-dev-server` through the command line, but this boilerplate opts for configuration via the `devServer` property in `webpack.config.js`. The options passed to the `devServer` property will be picked up by `webpack-dev-server`:
+
+* `compress` - enables gzip compression
+* `port` - Specifies which port to listen for requests
+* `inline` - Recommended for Hot Module Replacement. Currently the only way I know how to remove the `App Ready` status bar from the top of the browser.
+
+```javascript
+// webpack.config.js
+
+module.exports = {
+  ...
+  devServer: { compress: true, port: 3000, inline: true }
+}
+```
+
+More info in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
+[Link to GitHub Repo](https://github.com/webpack/webpack-dev-server)
+
+## Contributing
+
+This boilerplate is a work in progress. It's initial purpose was purely educational, but as I've begun to grasp webpack more I feel it is necessary to give back what I've learned through this repository. Feel free to create issues/ pull requests. If I feel that the contribution is in-line with the goal of this "boilerplate", I will gladly add it in. :ok_hand:
