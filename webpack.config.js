@@ -39,7 +39,7 @@ module.exports = {
         test: /\.jsx?$/,
         include: [ path.join(__dirname, 'src') ],
         // exclude the node_modules folder from being transpiled
-        exclude: [ path.join(__dirname, 'node_modules') ],
+        exclude: /node_modules/,
         // transform all .js and .jsx files to standard ES5 syntax
         // using the Babel loader
         loader: 'babel-loader'
@@ -60,7 +60,7 @@ module.exports = {
     //   filename: 'commons.js',
     //   minChunks: 2
     // })
-    new HtmlWebpackPlugin({ title: 'Webpack Demo' })
+    new HtmlWebpackPlugin({ template: path.join(PATHS.src, 'index.html') })
   ],
   // configuation for the webpack-dev-server plugin
   devServer: { compress: true, port: 3000, inline: true }

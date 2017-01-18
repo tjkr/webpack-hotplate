@@ -1,3 +1,5 @@
-export const sayHello = name => `Hello ${name}!`;
+import React from 'react';
 
-export const sayBye = name => `Bye ${name}!`;
+const Module = props => <h1>Hello, {props.name}!</h1>;
+
+export default Module;
