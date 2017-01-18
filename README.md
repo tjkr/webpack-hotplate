@@ -7,12 +7,13 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 * ES6 support via [Babel](https://github.com/babel/babel-loader)
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
-
-See the [in-depth](#features-in-depth) section at the end of the `README` for more details.
+* React
 
 ## Plugins
 
 [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
+
+See the [in-depth](#features-in-depth) sections at the end of the `README` for more details on features on plugins.
 
 ## Getting Started
 
@@ -35,6 +36,8 @@ npm install
 ```
 npm run build
 ```
+
+---
 
 ## Features In-depth
 
@@ -98,3 +101,28 @@ We can take this a step further by removing the `presets` array from `webpack.co
 ```
 
 After doing this, we can delete the `options` property from `module.rules` in `webpack.config.js`.
+
+---
+
+## Plugins In-depth
+
+### html-webpack-plugin
+
+The `html-webpack-plugin` generates an `index.html` file and includes the bundles emitted by webpack in `<body>`. `index.html` is then placed in `output.path`, which is defined in `webpack.config.js`.
+
+#### Configuration
+
+* `template` - An `index.html` file, located in `src`, is passed to `html-webpack-plugin` and used as a template for the output `dist/index.html`.
+
+```javascript
+// webpack.config.js
+
+module.exports = {
+  ...
+  plugins: [
+    new HtmlWebpackPlugin({ template: path.join(PATHS.src, 'index.html') })
+  ]  
+}
+```
+
+[Link to GitHub Repo](https://github.com/ampedandwired/html-webpack-plugin)

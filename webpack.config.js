@@ -47,8 +47,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // this plugin generates an index.html file template with
-    // our bundled JavaScript injected into the bottom of the body
     // this plugin allows for modules that get bundled 2 more more
     // times, defined by the `minChunks` property, in multiple
     // output files to be bundled together in a file called `common.js`.
@@ -60,6 +58,8 @@ module.exports = {
     //   filename: 'commons.js',
     //   minChunks: 2
     // })
+    // generates an index.html file template with
+    // our bundled JavaScript injected into the bottom of the body
     new HtmlWebpackPlugin({ template: path.join(PATHS.src, 'index.html') })
   ],
   // configuation for the webpack-dev-server plugin
