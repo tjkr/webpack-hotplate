@@ -1,9 +1,7 @@
-import { sayHello } from './modules/module';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Module from './modules/module';
 
-const name = 'World';
+const App = () => <Module name={'World'} />;
 
-let element = document.createElement('h1');
-
-element.innerHTML = sayHello(name);
-
-document.body.appendChild(element);
+ReactDOM.render(<App />, document.getElementById('app'));
