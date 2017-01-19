@@ -34,7 +34,7 @@ module.exports = {
   module: {
     rules: [
       {
-        // this regex pattern matches any files with a .js or .jsx
+        // regex pattern that matches any files with a .js or .jsx
         // file extension
         test: /\.jsx?$/,
         include: [ path.join(__dirname, 'src') ],
@@ -43,6 +43,28 @@ module.exports = {
         // transform all .js and .jsx files to standard ES5 syntax
         // using the Babel loader
         loader: 'babel-loader'
+      },
+      {
+        // regex pattern that matches any CSS files
+        test: /\.css$/,
+        use: [
+          // injects styles into the Document as a <link>
+          { loader: 'style-loader' },
+          {
+            // applies necessary transformations to CSS files
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              // enables CSS modules
+              modules: true,
+              // generates a unique css rule for component styles. This property is what allows
+              // CSS modules to contain rules locally. You can name a CSS rule something generic
+              // such as `.normal` or `.red`, and `localIdentName` will generate a unique CSS rule
+              // to avoid namespace clashing
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          }
+        ]
       }
     ]
   },
