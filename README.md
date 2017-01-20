@@ -7,6 +7,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 * ES6 support via [Babel](https://github.com/babel/babel-loader)
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * React
+* CSS Modules
 
 *[Features In-Depth](#features-in-depth)*
 
@@ -105,6 +106,62 @@ We can take this a step further by removing the `presets` array from `webpack.co
 ```
 
 We can then delete the `options` property from `module.rules` in `webpack.config.js`.
+
+### CSS Modules
+
+**CSS Modules** is an approach that aims to keep CSS rules tightly linked to the components in which they style.
+
+> A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
+
+The benefit of CSS Modules is that we can style components without worrying about flooding the global namespace with generic CSS class names. It also gives us the ability to reason about our styles with greater confidence. A trivial example would be a `<Form />` component defined in `Form.js` that has its corresponding styles inside `Form.css`. It may even be made up of other child components with their own styles as well.
+
+If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec. I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
+
+#### Configuration
+
+```javascript
+// webpack.config.js
+
+module.exports = {
+  ...
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          }
+        ]
+      }
+    ]   
+  }
+}
+```
+
+Another `rule` is added to the `module` property in `webpack.config.js`. This rule tests for all CSS files and applies two separate loaders to them: `css-loader` and `style-loader`.
+
+##### css-loader
+
+`css-loader` is applied first (multiple loaders are read from right to left in the `use` array). We can also pass a few options to `css-loader`:
+
+* `sourceMap` - when set to `true`, enables CSS sourcemaps
+* `modules` - enables CSS modules
+* `localIdentName` - the unique class name given to CSS modules rules.
+
+[css-loader GitHub Repo](https://github.com/webpack/css-loader)
+
+##### style-loader
+
+`style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
+
+[style-loader GitHub Repo](https://github.com/webpack/style-loader)
 
 ---
 
