@@ -6,7 +6,7 @@ import Module2 from './modules/module2';
 const App = () => {
   return (
     <div>
-      <Module name={'World'} />
+      <Module />
       <Module2 />
     </div>
   );

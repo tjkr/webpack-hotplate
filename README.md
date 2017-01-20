@@ -4,9 +4,9 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 
 ## Features
 
-* ES6 support via [Babel](https://github.com/babel/babel-loader)
-* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * React
+* ES6
+* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * CSS Modules
 
 *[Features In-Depth](#features-in-depth)*
