@@ -124,7 +124,7 @@ The benefit of CSS Modules is that we can style components without worrying abou
 ```
 
 ```javascript
-// Form.js
+/* Form.js */
 
 import React from 'react';
 import styles from 'Form.css';
@@ -140,7 +140,9 @@ class Form extends React.Component {
 }
 ```
 
-CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. If you don't have much experience using them, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec. I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
+CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. More info can also be found [here](https://github.com/css-modules/icss).
+
+If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec. I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
 
 #### Configuration
 
