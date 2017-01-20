@@ -142,7 +142,7 @@ class Form extends React.Component {
 
 CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. More info can also be found [here](https://github.com/css-modules/icss).
 
-If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec. I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
+If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the Interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec, [Glen Maddern](https://glenmaddern.com). I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
 
 #### Configuration
 
@@ -174,7 +174,7 @@ module.exports = {
 
 Another `rule` is added to the `module` property in `webpack.config.js`. This rule tests for all CSS files and applies two separate loaders to them: `css-loader` and `style-loader`.
 
-##### css-loader
+#### css-loader
 
 `css-loader` is applied first (multiple loaders are read from right to left in the `use` array). We can also pass a few options to `css-loader`:
 
@@ -182,13 +182,13 @@ Another `rule` is added to the `module` property in `webpack.config.js`. This ru
 * `modules` - enables CSS modules
 * `localIdentName` - the unique class name given to CSS modules rules.
 
-[css-loader GitHub Repo](https://github.com/webpack/css-loader)
+[GitHub Repo](https://github.com/webpack/css-loader)
 
-##### style-loader
+#### style-loader
 
 `style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
 
-[style-loader GitHub Repo](https://github.com/webpack/style-loader)
+[GitHub Repo](https://github.com/webpack/style-loader)
 
 ---
 
@@ -213,7 +213,7 @@ module.exports = {
 }
 ```
 
-[Link to GitHub Repo](https://github.com/ampedandwired/html-webpack-plugin)
+[GitHub Repo](https://github.com/ampedandwired/html-webpack-plugin)
 
 ### webpack-dev-server
 
@@ -238,7 +238,7 @@ module.exports = {
 
 More info in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
 
-[Link to GitHub Repo](https://github.com/webpack/webpack-dev-server)
+[GitHub Repo](https://github.com/webpack/webpack-dev-server)
 
 ## Contributing
 

@@ -84,6 +84,11 @@ module.exports = {
     // our bundled JavaScript injected into the bottom of the body
     new HtmlWebpackPlugin({ template: path.join(PATHS.src, 'index.html') })
   ],
+  // enables sourcemaps for js modules. From webpack docs: `eval-source-maps`: 'Initially it is slow, but
+  // it provides fast rebuild speed and yields real files. Line numbers are correctly
+  // mapped since it gets mapped to the original code.' `eval-source-maps` should not be
+  // used in production.
+  devtool: 'eval-source-map',
   // configuation for the webpack-dev-server plugin
   devServer: { compress: true, port: 3000, inline: true }
 };
