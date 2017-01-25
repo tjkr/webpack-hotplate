@@ -1,8 +1,8 @@
 /**
  * Requires
  */
-const HtmlWebpackPlugin = require('html-webpack-plugin'),
-  path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 /**
  * Variables
@@ -37,12 +37,25 @@ module.exports = {
         // regex pattern that matches any files with a .js or .jsx
         // file extension
         test: /\.jsx?$/,
-        include: [ path.join(__dirname, 'src') ],
+        include: [path.join(__dirname, 'src')],
         // exclude the node_modules folder from being transpiled
         exclude: /node_modules/,
-        // transform all .js and .jsx files to standard ES5 syntax
-        // using the Babel loader
-        loader: 'babel-loader'
+        // enables ESLint to run before anything else
+        enforce: 'pre',
+        use: [
+          // transform all .js and .jsx files to standard ES5 syntax
+          // using the Babel loader
+          {
+            loader: 'babel-loader'
+          },
+          // eslint runs before babel
+          {
+            loader: 'eslint-loader',
+            options: {
+              emiteWarning: true
+            }
+          }
+        ]
       },
       {
         // regex pattern that matches any CSS files
@@ -84,11 +97,15 @@ module.exports = {
     // our bundled JavaScript injected into the bottom of the body
     new HtmlWebpackPlugin({ template: path.join(PATHS.src, 'index.html') })
   ],
-  // enables sourcemaps for js modules. From webpack docs: `eval-source-maps`: 'Initially it is slow, but
-  // it provides fast rebuild speed and yields real files. Line numbers are correctly
-  // mapped since it gets mapped to the original code.' `eval-source-maps` should not be
-  // used in production.
+  // enables sourcemaps for js modules. From webpack docs: `eval-source-maps`:
+  // 'Initially it is slow, but it provides fast rebuild speed and yields real
+  // files. Line numbers are correctly mapped since it gets mapped to the original
+  // code.' `eval-source-maps` should not be used in production.
   devtool: 'eval-source-map',
   // configuation for the webpack-dev-server plugin
-  devServer: { compress: true, port: 3000, inline: true }
+  devServer: {
+    port: 3000,
+    inline: true,
+    stats: 'errors-only'
+  }
 };

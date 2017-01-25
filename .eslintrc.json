@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+        1,
+        { "extensions": [ ".js", ".jsx" ] }
+    ],
+    "comma-dangle": ["error", "never"],
+    "indent": ["error", 2],
+    "arrow-body-style": ["error", "as-needed"]
+  }
+}
