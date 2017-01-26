@@ -6,6 +6,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 
 * React
 * ES6
+* ESLint
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * CSS Modules
 
@@ -106,6 +107,58 @@ We can take this a step further by removing the `presets` array from `webpack.co
 ```
 
 We can then delete the `options` property from `module.rules` in `webpack.config.js`.
+
+### ESLint
+
+[ESLint](http://eslint.org/) is a flexible JavaScript linter that helps you define a set of syntax standards and patterns in your code. It is a helpful tool that can save you some time debugging silly syntax errors and keep your code consistent.
+
+In order to get ESLint working with webpack, a few things need to be installed as `devDependencies`:
+
+* `eslint`
+* `eslint-loader`
+
+The first installs `eslint` locally and the second installs the necessary loader.
+
+#### Configuration
+
+ESLint defines a set of syntax rules and will yell at you if your code breaks said rules. These are defined in the `.eslintrc.json` configuration file.
+
+You'll notice that this boilerplate uses the `eslint-config-airbnb` [base configuration](https://www.npmjs.com/package/eslint-config-airbnb).
+
+```
+// .eslintrc.json
+{
+  "extends": "airbnb"
+  ...
+}
+```
+
+It's a good configuration to get started with, but ESLint gives you the ability to add your own rules as well. You can even override certain rules that you don't particularly care for. See more about extending configurations [here](http://eslint.org/docs/user-guide/configuring#extending-configuration-files).
+
+##### Environments
+
+In `.eslintrc.json` you'll notice a property called `env`. [Environments](http://eslint.org/docs/user-guide/configuring#specifying-environments) define global variables that are predefined.
+
+```
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "es6": true
+  }
+}
+```
+
+##### Plugins
+
+This boilerplate also uses a few ESLint plugins:
+
+* [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import/issues)
+* [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
+* [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+
+They provide specific ESLint rules.
 
 ### CSS Modules
 
