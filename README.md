@@ -55,16 +55,17 @@ In order to get ESLint working with webpack, a few things need to be installed a
 * `eslint`
 * `eslint-loader`
 
-The first installs `eslint` locally and the second installs the necessary loader.
+The first installs `eslint` locally and the second installs the necessary webpack loader.
 
 #### Configuration
 
-ESLint defines a set of syntax rules and will yell at you if your code breaks said rules. These are defined in the `.eslintrc.json` configuration file.
+ESLint defines a set of syntax rules and will yell at you if your code breaks them. These are defined in the `.eslintrc.json` configuration file.
 
-You'll notice that this boilerplate uses the `eslint-config-airbnb` [base configuration](https://www.npmjs.com/package/eslint-config-airbnb).
+You'll notice that `webpack-hotplate` uses the [eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb) base configuration.
 
-```
+```javascript
 // .eslintrc.json
+
 {
   "extends": "airbnb"
   ...
@@ -75,10 +76,11 @@ It's a good configuration to get started with, but ESLint gives you the ability 
 
 ##### Environments
 
-In `.eslintrc.json` you'll notice a property called `env`. [Environments](http://eslint.org/docs/user-guide/configuring#specifying-environments) define global variables that are predefined.
+[Environments](http://eslint.org/docs/user-guide/configuring#specifying-environments) define global variables that are predefined. They can be added to your configuration using the `env` property in `.eslintrc.json`.
 
-```
+```javascript
 // .eslintrc.json
+
 {
   "env": {
     "browser": true,
@@ -91,7 +93,7 @@ In `.eslintrc.json` you'll notice a property called `env`. [Environments](http:/
 
 ##### Plugins
 
-This boilerplate also uses a few ESLint plugins:
+`webpack-hotplate` also uses a few ESLint plugins:
 
 * [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import/issues)
 * [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y)
@@ -105,7 +107,9 @@ They provide specific ESLint rules.
 
 > A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
 
-The benefit of CSS Modules is that we can style components without worrying about flooding the global namespace with generic CSS class names. It also gives us the ability to reason about our styles with greater confidence. CSS Modules works surprisingly well with the modular nature of React. A trivial example of this would be a `<Form />` component defined in `Form.js` that has its corresponding styles inside `Form.css`.
+The benefit of CSS Modules is that you can style components without worrying about flooding the global namespace with generic CSS class names. It also gives you the ability to reason about your styles with greater confidence.
+
+CSS Modules work surprisingly well with the modular nature of React. A trivial example of this would be a `<Form />` component defined in `Form.js` that has its corresponding styles inside `Form.css`.
 
 ```css
 /* Form.css */
@@ -134,7 +138,7 @@ class Form extends React.Component {
 
 CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. More info can also be found [here](https://github.com/css-modules/icss).
 
-If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the Interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec, [Glen Maddern](https://glenmaddern.com). I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
+If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the Interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec, [Glen Maddern](https://glenmaddern.com). I highly suggest reading it, as it will give you some insight as to how your CSS can be handled through JavaScript.
 
 #### Configuration
 
@@ -164,11 +168,11 @@ module.exports = {
 }
 ```
 
-Another `rule` is added to the `module` property in `webpack.config.js`. This rule tests for all CSS files and applies two separate loaders to them: `css-loader` and `style-loader`.
+A `rule` is added to the `module` property in `webpack.config.js`. This rule tests for all CSS files and applies two separate loaders to them: `css-loader` and `style-loader`.
 
 #### css-loader
 
-`css-loader` is applied first (multiple loaders are read from right to left in the `use` array). We can also pass a few options to `css-loader`:
+`css-loader` is applied first (in webpack, multiple loaders are read from right to left inside the `use` array). You can also pass a few options to `css-loader`:
 
 * `sourceMap` - when set to `true`, enables CSS sourcemaps
 * `modules` - enables CSS modules
@@ -188,7 +192,7 @@ One of the advantages that webpack 2 brings to the table is **tree-shaking**. We
 
 #### How is this accomplished?
 
-This webpack configuration uses `babel-preset-es2015`. This preset bundles [many transforms](https://github.com/babel/babel/blob/master/packages/babel-preset-es2015/src/index.js) together. One of those transforms, `babel-plugin-transform-es2015-modules-commonjs`, converts ES6 code into CommonJS modules. This is not ideal, as tree-shaking is not possible with CommonJS modules. We need a way to use `babel-preset-es2015` without the `commonjs` transform. Luckily, this problem can be solved by [adding another option](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015#options) to `babel-loader` in `webpack.config.js`:
+This webpack configuration uses `babel-preset-es2015`. This preset bundles [many transforms](https://github.com/babel/babel/blob/master/packages/babel-preset-es2015/src/index.js) together. One of those transforms, `babel-plugin-transform-es2015-modules-commonjs`, converts ES6 code into CommonJS modules. This is not ideal, as tree-shaking is not possible with CommonJS modules. There needs to be a way to use `babel-preset-es2015` without the `commonjs` transform. Luckily, this problem can be solved by [adding another option](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015#options) to `babel-loader` in `webpack.config.js`:
 
 ```javascript
 //webpack.config.js
@@ -228,14 +232,15 @@ According to the `babel-preset-es2015` documentation:
 
 Adding `{"modules": false}` should prevent ES6 modules from being transformed to `commonJS` modules, giving webpack its coveted tree-shaking ability!
 
-**Note:** If you test this functionality, you may find that unused exports are still finding their way in to your bundle. This is true only in development mode. In production mode, files are minified and dead code is eliminated. Unused exports will be washed away!. Run `webpack -p` in your terminal to test.
+**Note:** If you test this functionality, you may find that unused exports are still finding their way into your bundle. This is true only in `development` mode. In `production` mode, files are minified and dead code is eliminated. Unused exports will be washed away!. Run `webpack -p` in your terminal to test.
 
 #### Extracting Babel presets out to `.babelrc`
 
-We can take this a step further by removing the `presets` array from `webpack.config.js` and adding it to a seperate file in our project root named `.babelrc`. This is approach gives us a better *seperation of concerns*.
+`webpack-hotplate` takes this a step further by extracting the `presets` array from `webpack.config.js` and adding it to a seperate file in the project's root named `.babelrc`. This approach provides a better *seperation of concerns*.
 
 ```javascript
 // .babelrc
+
 {
   "presets": [
     [ "es2015", { "modules": false } ]
@@ -243,19 +248,48 @@ We can take this a step further by removing the `presets` array from `webpack.co
 }
 ```
 
-We can then delete the `options` property from `module.rules` in `webpack.config.js`.
+*Note* that the `options` object that contained `presets` is then removed from `module` in `webpack.config.js`.
 
 ### webpack-merge
 
-Probably the most foreign part of this boilerplate is the reliance of [webpack-merge](https://github.com/survivejs/webpack-merge), a tool designed to provide a more modular approach to webpack configurations.
+Probably the most foreign part of `webpack-hotplate` to this point is the reliance of [webpack-merge](https://github.com/survivejs/webpack-merge), a tool designed to provide a more modular approach to webpack configurations.
 
-Not all webpack configurations are created equal. There are settings that exist during `development` that shouldn't exist in `production`. One way to handle this is by creating 2 configuration files, one for each. While this works, `webpack-merge` gives us a bit of flexibility.
+Not all webpack configurations are created equal. There are settings that exist during `development` that shouldn't exist in `production`. One way to handle this is by creating 2 configuration files, one for each. While this works, `webpack-merge` gives us a bit more flexibility.
 
-#### configuration
+#### Configuration
 
-We can describe a `Commons` object that houses "common" configuration settings between `development` and `production`. This object is then merged with other configuration settings depending on the `env` object, passed via the webpack CLI. This object makes up the bulk of `webpack.config.js`.
+A `Commons` object that houses "common" configuration settings between `development` and `production` is created inside of `webpack.config.js`. This object is then merged with other configuration settings depending on the `env` variable, passed via the webpack CLI.
 
-A seperate file, `webpack.parts.js`, houses seperate configuration settings that aren't "common". Think of this file as a bucket of legos. Depending on the environment your webpack bundle is being built for (`development` or `production`), you can grab the lego you need and attach it (merge it) with the `Commons` object via `webpack-merge`.
+```javascript
+// wepack.config.js
+
+const merge = require('webpack-merge');
+
+const Common = merge([
+  {
+    // ... common configuration that exists in `development` and `production`
+  }
+]);
+
+module.exports = function(env) {
+  // Production Configuration
+  if (env === 'production') {
+    return merge([
+      Common,
+      // ... production-specific settings
+    ]);
+  }
+  // Development Configuration
+  return merge([
+    Common,
+    // ... development-specific configuration
+  ]);
+}
+```
+
+A seperate file, `webpack.parts.js`, houses seperate configuration settings that aren't "common" across evironments. Think of this file as a bucket of legos. Depending on the environment your webpack bundle is being built for (`development` or `production`), you can grab the legos you need and attach them (merge them) with the `Commons` object via `webpack-merge`.
+
+[GitHub Repo](https://github.com/survivejs/webpack-merge)
 
 ---
 
@@ -288,22 +322,45 @@ An Express server used **only** in development mode and provides live reloading.
 
 #### Configuration
 
-You can run `webpack-dev-server` through the command line, but this boilerplate opts for configuration via the `devServer` property in `webpack.config.js`. The options passed to the `devServer` property will be picked up by `webpack-dev-server`:
+You can run `webpack-dev-server` through the command line, but `webpack-hotplate` opts for configuration via the `devServer` property. In most webpack configurations, this property can be found in `webpack.config.js`. However, `webpack-hotplate` uses `webpack-merge` to split configurations depending on the environment the bundle is being built for.
 
-* `compress` - enables gzip compression
-* `port` - Specifies which port to listen for requests
-* `inline` - Recommended for Hot Module Replacement. Currently the only way I know how to remove the `App Ready` status bar from the top of the browser.
+`webpack-dev-server` is not required in `production` configurations, only development. Therefore we can seperate the `devServer` property into `webpack.parts.js`.
 
 ```javascript
-// webpack.config.js
+// webpack.parts.js
 
-module.exports = {
-  ...
-  devServer: { compress: true, port: 3000, inline: true }
+exports.devServer = function(options) {
+  return {
+    devServer: {
+      host: options.host,
+      port: options.port,
+      inline: true,
+      stats: 'errors-only'
+    }
+  }
 }
 ```
 
-More info in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
+This function is then run inside `webpack.config.js` depending on the environment.
+
+```javascript
+module.exports = function(env) {
+  if (env === 'production') {
+    // ... do production things
+  }
+
+  return merge([
+    Common,
+    Parts.devServer({
+      host: process.env.HOST,
+      port: process.env.PORT
+    }),
+    // ... do more development things
+  ]);
+}
+```
+
+More info can be found in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
 
 [GitHub Repo](https://github.com/webpack/webpack-dev-server)
 
