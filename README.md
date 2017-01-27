@@ -4,11 +4,12 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 
 ## Features
 
-* React
 * ES6
+* React
 * ESLint
-* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * CSS Modules
+* Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
+* Environment-specific configuration via [webpack-merge](https://github.com/survivejs/webpack-merge)
 
 *[Features In-Depth](#features-in-depth)*
 
@@ -140,6 +141,7 @@ It's a good configuration to get started with, but ESLint gives you the ability 
 In `.eslintrc.json` you'll notice a property called `env`. [Environments](http://eslint.org/docs/user-guide/configuring#specifying-environments) define global variables that are predefined.
 
 ```
+// .eslintrc.json
 {
   "env": {
     "browser": true,
