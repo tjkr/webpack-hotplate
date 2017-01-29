@@ -1,13 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Module from './modules/module';
-import Module2 from './modules/module2';
+import { render } from 'react-dom';
+
+import Header from './components/Header';
 
 const App = () => (
-  <div>
-    <Module />
-    <Module2 />
-  </div>
+  <Header>webpack-hotplate</Header>
 );
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));

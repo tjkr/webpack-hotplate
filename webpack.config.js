@@ -57,14 +57,7 @@ const Common = merge([
               // applies necessary transformations to CSS files
               loader: 'css-loader',
               options: {
-                sourceMap: true,
-                // enables CSS modules
-                modules: true,
-                // generates a unique css rule for component styles. This property is what allows
-                // CSS modules to contain rules locally. You can name a CSS rule something generic
-                // such as `.normal` or `.red`, and `localIdentName` will generate a unique CSS rule
-                // to avoid namespace clashing
-                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                sourceMap: true
               }
             }
           ]
