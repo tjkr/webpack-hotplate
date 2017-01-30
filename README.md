@@ -107,51 +107,6 @@ The advent of React as a "component-based" library fueled discussions about how 
 
 The great thing about `styled-components` is that it enforces the separation of **presentational** and **container** components. The container component contains the logic. The presentational component is concerned only with how the component looks.
 
-#### Configuration
-
-With every webpack configuration, you need to tell it how to handle your CSS. You can do so by using two specific webpack loaders:
-
-* `css-loader`
-* `style-loader`
-
-```javascript
-// webpack.config.js
-
-module.exports = {
-  ...
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            }
-          }
-        ]
-      }
-    ]   
-  }
-}
-```
-
-#### css-loader
-
-`css-loader` is applied first (in webpack, multiple loaders are read from right to left inside the `use` array). You can also pass a few options to `css-loader`:
-
-* `sourceMap` - when set to `true`, enables CSS sourcemaps
-
-[GitHub Repo](https://github.com/webpack/css-loader)
-
-#### style-loader
-
-`style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
-
-[GitHub Repo](https://github.com/webpack/style-loader)
-
 #### Creating a styled-component
 
 The `styled-components` library exposes an API that makes the creation of a presentational component really easy.
