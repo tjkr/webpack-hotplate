@@ -90,7 +90,7 @@ module.exports = function(env) {
     Parts.lintJS({
       paths: PATHS.src,
       options: {
-        emiteWarning: true
+        emitWarning: true
       }
     })
   ]);
