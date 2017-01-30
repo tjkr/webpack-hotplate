@@ -7,7 +7,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 * ES6
 * React
 * ESLint
-* CSS Modules
+* [styled-components](https://github.com/styled-components/styled-components)
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * Environment-specific configuration via [webpack-merge](https://github.com/survivejs/webpack-merge)
 
@@ -101,90 +101,55 @@ It's a good configuration to get started with, but ESLint gives you the ability 
 
 They provide specific ESLint rules.
 
-### CSS Modules
+### styled-components
 
-**CSS Modules** is an approach that aims to keep CSS rules tightly linked to the components in which they style.
+The advent of React as a "component-based" library fueled discussions about how developers should approach CSS. There are a few great ideas floating around the open-source community. One such idea is [styled-components](https://github.com/styled-components/styled-components). Created by [Max Stoiber](https://twitter.com/mxstbr?lang=en) and [Glenn Maddern](https://twitter.com/glenmaddern?lang=en), `styled-components` are a way of tightly coupling a component with its styles. It utilizes the power of ES6's [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), allowing you to define components with unique CSS rules.
 
-> A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
+The great thing about `styled-components` is that it enforces the separation of **presentational** and **container** components. The container component contains the logic. The presentational component is concerned only with how the component looks.
 
-The benefit of CSS Modules is that you can style components without worrying about flooding the global namespace with generic CSS class names. It also gives you the ability to reason about your styles with greater confidence.
+#### Creating a styled-component
 
-CSS Modules work surprisingly well with the modular nature of React. A trivial example of this would be a `<Form />` component defined in `Form.js` that has its corresponding styles inside `Form.css`.
-
-```css
-/* Form.css */
-
-.form {
-  /* styles for form with generic `.form` class name */
-}
-```
+The `styled-components` library exposes an API that makes the creation of a presentational component really easy.
 
 ```javascript
-/* Form.js */
+// Header.js
 
-import React from 'react';
-import styles from 'Form.css';
+import styled from 'styled-components';
 
-class Form extends React.Component {
-  render() {
-    return (
-      <div className={styles.form}>
-        // ...
-      </div>
-    );
-  }
-}
+// create a React component named Header, which renders an
+// `h1` element with these styles
+const Header = styled.h1`
+  font-family: Andale mono;
+  font-size: 4em;
+  color: slateblue;
+  text-align: center;
+`;
+
+// export the Header component
+export default Header;
 ```
 
-CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. More info can also be found [here](https://github.com/css-modules/icss).
-
-If you don't have much experience using CSS Modules, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the Interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec, [Glen Maddern](https://glenmaddern.com). I highly suggest reading it, as it will give you some insight as to how your CSS can be handled through JavaScript.
-
-#### Configuration
+The example above may look foreign if you're new to ES6. This is a tagged template literal. `styled.h1` is actually a function, and the argument it takes is the text describing the CSS properties.
 
 ```javascript
-// webpack.config.js
 
-module.exports = {
-  ...
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[path][name]__[local]--[hash:base64:5]'
-            }
-          }
-        ]
-      }
-    ]   
-  }
-}
+styled.h1`
+  font-family: Andale mono;
+  font-size: 4em;
+  color: slateblue;
+  text-align: center;
+`
 ```
 
-A `rule` is added to the `module` property in `webpack.config.js`. This rule tests for all CSS files and applies two separate loaders to them: `css-loader` and `style-loader`.
+It returns a React component that renders an `h1` element. You should notice that this way of creating a React component doesn't allow you the opportunity to add logic or state. This is a good thing, because presentational components shouldn't contain logic or state. They're strictly *presentational*.
 
-#### css-loader
+Here are a few helpful links to get more familiar with `styled-components`:
 
-`css-loader` is applied first (in webpack, multiple loaders are read from right to left inside the `use` array). You can also pass a few options to `css-loader`:
-
-* `sourceMap` - when set to `true`, enables CSS sourcemaps
-* `modules` - enables CSS modules
-* `localIdentName` - the unique class name given to CSS modules rules.
-
-[GitHub Repo](https://github.com/webpack/css-loader)
-
-#### style-loader
-
-`style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
-
-[GitHub Repo](https://github.com/webpack/style-loader)
+* [styled-components Website](https://styled-components.com/)
+* [Styled-Components: Enforcing Best Practices In Component-Based Systems](https://www.smashingmagazine.com/2017/01/styled-components-enforcing-best-practices-component-based-systems/)
+* [styled-components Production patterns](https://medium.com/@jamiedixon/styled-components-production-patterns-c22e24b1d896#.rqg8z85eg)
+* [The Magic Behind styled-components](http://mxstbr.blog/2016/11/styled-components-magic-explained/)
+* [Max Stoiber explains styled-components @ ReactiveConf 2016](https://www.youtube.com/watch?v=jaqDA7Btm3c)
 
 ### Tree-shaking
 
