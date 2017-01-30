@@ -47,21 +47,6 @@ const Common = merge([
           // using the Babel loader
           loader: 'babel-loader'
         }
-        // {
-        //   // regex pattern that matches any CSS files
-        //   test: /\.css$/,
-        //   use: [
-        //     // injects styles into the Document as a <link>
-        //     { loader: 'style-loader' },
-        //     {
-        //       // applies necessary transformations to CSS files
-        //       loader: 'css-loader',
-        //       options: {
-        //         sourceMap: true
-        //       }
-        //     }
-        //   ]
-        // }
       ]
     },
     plugins: [
