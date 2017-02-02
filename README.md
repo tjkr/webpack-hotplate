@@ -7,7 +7,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 * ES6
 * React
 * ESLint
-* [styled-components](https://github.com/styled-components/styled-components)
+* CSS Modules
 * Exclusion of unused exports via [Tree Shaking](http://www.2ality.com/2015/12/webpack-tree-shaking.html)
 * Environment-specific configuration via [webpack-merge](https://github.com/survivejs/webpack-merge)
 
@@ -101,55 +101,11 @@ It's a good configuration to get started with, but ESLint gives you the ability 
 
 They provide specific ESLint rules.
 
-### styled-components
 
-The advent of React as a "component-based" library fueled discussions about how developers should approach CSS. There are a few great ideas floating around the open-source community. One such idea is [styled-components](https://github.com/styled-components/styled-components). Created by [Max Stoiber](https://twitter.com/mxstbr?lang=en) and [Glenn Maddern](https://twitter.com/glenmaddern?lang=en), `styled-components` are a way of tightly coupling a component with its styles. It utilizes the power of ES6's [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals), allowing you to define components with unique CSS rules.
+### CSS Modules
 
-The great thing about `styled-components` is that it enforces the separation of **presentational** and **container** components. The container component contains the logic. The presentational component is concerned only with how the component looks.
 
-#### Creating a styled-component
 
-The `styled-components` library exposes an API that makes the creation of a presentational component really easy.
-
-```javascript
-// Header.js
-
-import styled from 'styled-components';
-
-// create a React component named Header, which renders an
-// `h1` element with these styles
-const Header = styled.h1`
-  font-family: Andale mono;
-  font-size: 4em;
-  color: slateblue;
-  text-align: center;
-`;
-
-// export the Header component
-export default Header;
-```
-
-The example above may look foreign if you're new to ES6. This is a tagged template literal. `styled.h1` is actually a function, and the argument it takes is the text describing the CSS properties.
-
-```javascript
-
-styled.h1`
-  font-family: Andale mono;
-  font-size: 4em;
-  color: slateblue;
-  text-align: center;
-`
-```
-
-It returns a React component that renders an `h1` element. You should notice that this way of creating a React component doesn't allow you the opportunity to add logic or state. This is a good thing, because presentational components shouldn't contain logic or state. They're strictly *presentational*.
-
-Here are a few helpful links to get more familiar with `styled-components`:
-
-* [styled-components Website](https://styled-components.com/)
-* [Styled-Components: Enforcing Best Practices In Component-Based Systems](https://www.smashingmagazine.com/2017/01/styled-components-enforcing-best-practices-component-based-systems/)
-* [styled-components Production patterns](https://medium.com/@jamiedixon/styled-components-production-patterns-c22e24b1d896#.rqg8z85eg)
-* [The Magic Behind styled-components](http://mxstbr.blog/2016/11/styled-components-magic-explained/)
-* [Max Stoiber explains styled-components @ ReactiveConf 2016](https://www.youtube.com/watch?v=jaqDA7Btm3c)
 
 ### Tree-shaking
 
