@@ -17,6 +17,7 @@ A lightweight, flexible [webpack](https://github.com/webpack/webpack) configurat
 
 * [html-webpack-plugin](https://github.com/ampedandwired/html-webpack-plugin)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin)
 
 *[Plugins In-Depth](#plugins-in-depth)*
 
@@ -259,13 +260,13 @@ exports.CSS = function(env) {
 * `modules` - enables CSS modules
 * `localIdentName` - the unique class name given to CSS modules rules.
 
-[css-loader GitHub Repo](https://github.com/webpack/css-loader)
+[GitHub Repo](https://github.com/webpack/css-loader)
 
 ##### style-loader
 
 `style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
 
-[style-loader GitHub Repo](https://github.com/webpack/style-loader)
+[GitHub Repo](https://github.com/webpack/style-loader)
 
 #### Production
 
@@ -303,13 +304,7 @@ exports.CSS = function(env) {
 }
 ```
 
-##### extract-text-webpack-plugin
-
-Webpack uses `extract-text-webpack-plugin` to output a separate CSS file with all necessary styles for a given bundle. This is ideal for `production` mode. It gives you the ability to load your CSS "in parallel" to the outputed JS bundle.
-
-Normally you would just need to `npm install extract-text-webpack-plugin --save-dev`, but `webpack-hotplate` is using webpack 2, so it's imperative that the *latest beta version* of `extract-text-webpack-plugin` is used. It is more compatible with webpack 2. See [extract-text-webpack-plugin issue #210](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/210) and [webpack issue #2764](https://github.com/webpack/webpack/issues/2764) for more information.
-
-[extract-text-webpack-plugin GitHub Repo](https://github.com/webpack-contrib/extract-text-webpack-plugin)
+See more about `extract-text-webpack-plugin` in the [Plugins In-Depth section](#extract-text-webpack-plugin).
 
 ### Tree-shaking
 
@@ -447,6 +442,16 @@ module.exports = function(env) {
 More info can be found in the [webpack 2 docs](https://webpack.js.org/configuration/dev-server/#devserver-inline-cli-only)
 
 [GitHub Repo](https://github.com/webpack/webpack-dev-server)
+
+### extract-text-webpack-plugin
+
+Webpack uses `extract-text-webpack-plugin` to output a separate CSS file with all necessary styles for a given bundle. This is ideal for `production` mode. It gives you the ability to load your CSS "in parallel" to the outputed JS bundle.
+
+Normally you would just need to `npm install extract-text-webpack-plugin --save-dev`, but `webpack-hotplate` is using webpack 2, so it's imperative that the *latest beta version* of `extract-text-webpack-plugin` is used. It is more compatible with webpack 2.
+
+See [extract-text-webpack-plugin issue #210](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/210) and [webpack issue #2764](https://github.com/webpack/webpack/issues/2764) for more information.
+
+[GitHub Repo](https://github.com/webpack-contrib/extract-text-webpack-plugin)
 
 ## Contributing
 
