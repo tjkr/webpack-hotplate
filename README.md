@@ -46,6 +46,47 @@ npm start
 
 ## Features In-depth
 
+### webpack-merge
+
+Probably the most foreign part of `webpack-hotplate` to this point is the reliance of [webpack-merge](https://github.com/survivejs/webpack-merge), a tool designed to provide a more modular approach to webpack configurations.
+
+Not all webpack configurations are created equal. There are settings that exist during `development` that shouldn't exist in `production`. One way to handle this is by creating 2 configuration files, one for each. While this works, `webpack-merge` gives us a bit more flexibility.
+
+#### Configuration
+
+A `Commons` object that houses "common" configuration settings between `development` and `production` is created inside of `webpack.config.js`. This object is then merged with other configuration settings depending on the `env` variable, passed via the webpack CLI.
+
+```javascript
+// wepack.config.js
+
+const merge = require('webpack-merge');
+
+const Common = merge([
+  {
+    // ... common configuration that exists in `development` and `production`
+  }
+]);
+
+module.exports = function(env) {
+  // Production Configuration
+  if (env === 'production') {
+    return merge([
+      Common,
+      // ... production-specific settings
+    ]);
+  }
+  // Development Configuration
+  return merge([
+    Common,
+    // ... development-specific configuration
+  ]);
+}
+```
+
+A seperate file, `webpack.parts.js`, houses seperate configuration settings that aren't "common" across evironments. Think of this file as a bucket of legos. Depending on the environment your webpack bundle is being built for (`development` or `production`), you can grab the legos you need and attach them (merge them) with the `Commons` object via `webpack-merge`.
+
+[GitHub Repo](https://github.com/survivejs/webpack-merge)
+
 ### ESLint
 
 [ESLint](http://eslint.org/) is a flexible JavaScript linter that helps you define a set of syntax standards and patterns in your code. It is a helpful tool that can save you some time debugging silly syntax errors and keep your code consistent.
@@ -101,11 +142,174 @@ It's a good configuration to get started with, but ESLint gives you the ability 
 
 They provide specific ESLint rules.
 
-
 ### CSS Modules
 
+**CSS Modules** is an approach that aims to keep CSS rules tightly linked to the components in which they style.
 
+> A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
 
+The benefit of CSS Modules is that you can style components without worrying about flooding the global namespace with generic CSS class names. It also gives you the ability to reason about your styles with greater confidence. CSS Modules works surprisingly well with the modular nature of React. A trivial example of this would be a `<Form />` component defined in `Form.js` that has its corresponding styles inside `Form.css`.
+
+```css
+/* Form.css */
+
+.form {
+ /* styles for form with generic `.form` class name */
+}
+```
+
+```javascript
+// Form.js
+
+import React from 'react';
+import styles from 'Form.css';
+
+class Form extends React.Component {
+ render() {
+   return (
+     <div className={styles.form}>
+       // ...
+     </div>
+   );
+ }
+}
+```
+
+CSS Modules are possible due to the low-level file format known as [Interoperable CSS](https://glenmaddern.com/articles/interoperable-css), or ICSS. If you don't have much experience using them, refer to the [GitHub Repo](https://github.com/css-modules/css-modules). There are also a number of great articles floating around the Interwebs, in particular [this one](https://glenmaddern.com/articles/css-modules), written by one of the co-creators of the CSS Module spec. I highly suggest reading it, as it will give you some insight as to how our CSS can be handled through JavaScript.
+
+#### Configuration
+
+In order to get CSS modules working for both `development` and `production`, `webpack-hotplate` abstracts the CSS configuration into `webpack.parts.js`:
+
+```javascript
+// webpack.parts.js
+
+exports.CSS = function(env) {
+  if (env === 'production') {
+    return {
+      // ... Return production config
+    }
+  }
+
+  return {
+    // ... if this code runs, `env` is `development`. Return dev configuration
+  }
+}
+```
+
+This function is then called in `webpack.config.js` and is merged into the `common` webpack configuration via `webpack-merge`:
+
+```javascript
+// webpack.config.js
+
+module.exports = function(env) {
+  // Production configuration
+  if (env === 'production') {
+    return merge([
+      Common,
+      Parts.CSS(env)
+    ]);
+  }
+  // Development configuration
+  return merge([
+    Common,
+    Parts.CSS(env)
+  ]);
+}
+```
+
+#### Development
+
+The configuration for `development` relies on `css-loader` and `style-loader` to get the necessary styles on the page:
+
+```javascript
+// webpack.parts.js
+
+exports.CSS = function(env) {
+  // ...
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            { loader: 'style-loader' },
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                localIdentName: '[path][name]__[local]--[hash:base64:5]'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+##### css-loader
+
+`css-loader` is applied first (multiple loaders are read from right to left in the `use` array). We can also pass a few options to `css-loader`:
+
+* `sourceMap` - when set to `true`, enables CSS sourcemaps
+* `modules` - enables CSS modules
+* `localIdentName` - the unique class name given to CSS modules rules.
+
+[css-loader GitHub Repo](https://github.com/webpack/css-loader)
+
+##### style-loader
+
+`style-loader` is applied after `css-loader` and injects the required CSS into the DOM via `<link>` tags.
+
+[style-loader GitHub Repo](https://github.com/webpack/style-loader)
+
+#### Production
+
+The configuration for `production` is a little bit different. Instead of relying on `style-loader` to get the CSS onto the page, `webpack-hotplate` uses `extract-text-webpack-plugin` to get all the necessary styles and add them to a separate CSS file which is linked in the head of the document:
+
+```javascript
+// webpack.parts.js
+
+exports.CSS = function(env) {
+  if (env === 'production') {
+    return {
+      module: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: ExtractTextPlugin.extract({
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: true,
+                  localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                }
+            })
+          }
+        ]
+      },
+      plugins: [
+        new ExtractTextPlugin({
+          filename: '[name].css',
+          allChunks: true
+        })
+      ]
+    }
+  }
+}
+```
+
+##### extract-text-webpack-plugin
+
+Webpack uses `extract-text-webpack-plugin` to output a separate CSS file with all necessary styles for a given bundle. This is ideal for `production` mode. It gives you the ability to load your CSS "in parallel" to the outputed JS bundle.
+
+Normally you would just need to `npm install extract-text-webpack-plugin --save-dev`, but `webpack-hotplate` is using webpack 2, so it's imperative that the *latest beta version* of `extract-text-webpack-plugin` is used. It is more compatible with webpack 2. See [extract-text-webpack-plugin issue #210](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/210) and [webpack issue #2764](https://github.com/webpack/webpack/issues/2764) for more information.
+
+[extract-text-webpack-plugin GitHub Repo](https://github.com/webpack-contrib/extract-text-webpack-plugin)
 
 ### Tree-shaking
 
@@ -170,47 +374,6 @@ Adding `{"modules": false}` should prevent ES6 modules from being transformed to
 ```
 
 *Note* that the `options` object that contained `presets` is then removed from `module` in `webpack.config.js`.
-
-### webpack-merge
-
-Probably the most foreign part of `webpack-hotplate` to this point is the reliance of [webpack-merge](https://github.com/survivejs/webpack-merge), a tool designed to provide a more modular approach to webpack configurations.
-
-Not all webpack configurations are created equal. There are settings that exist during `development` that shouldn't exist in `production`. One way to handle this is by creating 2 configuration files, one for each. While this works, `webpack-merge` gives us a bit more flexibility.
-
-#### Configuration
-
-A `Commons` object that houses "common" configuration settings between `development` and `production` is created inside of `webpack.config.js`. This object is then merged with other configuration settings depending on the `env` variable, passed via the webpack CLI.
-
-```javascript
-// wepack.config.js
-
-const merge = require('webpack-merge');
-
-const Common = merge([
-  {
-    // ... common configuration that exists in `development` and `production`
-  }
-]);
-
-module.exports = function(env) {
-  // Production Configuration
-  if (env === 'production') {
-    return merge([
-      Common,
-      // ... production-specific settings
-    ]);
-  }
-  // Development Configuration
-  return merge([
-    Common,
-    // ... development-specific configuration
-  ]);
-}
-```
-
-A seperate file, `webpack.parts.js`, houses seperate configuration settings that aren't "common" across evironments. Think of this file as a bucket of legos. Depending on the environment your webpack bundle is being built for (`development` or `production`), you can grab the legos you need and attach them (merge them) with the `Commons` object via `webpack-merge`.
-
-[GitHub Repo](https://github.com/survivejs/webpack-merge)
 
 ---
 

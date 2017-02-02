@@ -52,7 +52,6 @@ exports.CSS = function(env) {
           {
             test: /\.css$/,
             use: ExtractTextPlugin.extract({
-                // fallbackLoader: 'style-loader',
                 loader: 'css-loader',
                 options: {
                   sourceMap: true,

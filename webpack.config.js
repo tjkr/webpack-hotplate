@@ -62,7 +62,7 @@ module.exports = function(env) {
    * Production Configuration
    */
   if (env === 'production') {
-    return merge.smart([
+    return merge([
       Common,
       Parts.lintJS({ paths: PATHS.src }),
       Parts.CSS(env)
