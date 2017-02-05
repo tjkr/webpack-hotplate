@@ -45,7 +45,7 @@ const Common = merge([
           exclude: /node_modules/,
           // Transform all .js and .jsx files to standard ES5 syntax
           // using the Babel loader
-          loader: 'babel-loader'
+          use: 'babel-loader'
         }
       ]
     },
