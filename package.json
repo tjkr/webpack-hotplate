@@ -6,7 +6,7 @@
   "scripts": {
     "test:lint": "eslint . --cache",
     "start": "webpack-dev-server --open --env development",
-    "build": "webpack --env production"
+    "build": "webpack -p --env production"
   },
   "keywords": [],
   "author": "",
